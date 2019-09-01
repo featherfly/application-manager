@@ -4,6 +4,9 @@ package cn.featherfly.appmanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>
  * AbstractApplication
@@ -11,7 +14,10 @@ import java.util.List;
  *
  * @author zhongj
  */
-public abstract class AbstractApplication<A extends Application<A>> implements Application<A> {
+public abstract class AbstractApplication<A extends Application<A>>
+        implements Application<A> {
+
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private State state = State.SHUTDOWN;
 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import cn.featherfly.common.lang.CollectionUtils;
+import cn.featherfly.common.lang.StringUtils;
 
 /**
  * <p>
@@ -40,8 +41,10 @@ public class JavaApplication extends ProcessApplication<JavaApplication> {
      * @param classpaths
      * @param argus
      */
-    public JavaApplication(String baseDir, String mainClass, Set<String> classpaths, String... argus) {
-        this(baseDir, mainClass, false, classpaths, argus);
+    public JavaApplication(String baseDir, String mainClass,
+            Set<String> classpaths, String... argus) {
+        this(baseDir, mainClass, StringUtils.substringAfterLast(mainClass, ".")
+                .equalsIgnoreCase("jar"), classpaths, argus);
     }
 
     /**
@@ -51,7 +54,8 @@ public class JavaApplication extends ProcessApplication<JavaApplication> {
      * @param classpaths
      * @param argus
      */
-    public JavaApplication(String baseDir, String main, boolean mainIsJar, Set<String> classpaths, String... argus) {
+    public JavaApplication(String baseDir, String main, boolean mainIsJar,
+            Set<String> classpaths, String... argus) {
         super(baseDir);
         this.main = main;
         this.mainIsJar = mainIsJar;

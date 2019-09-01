@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import cn.featherfly.appmanager.ApplicationEvent;
 import cn.featherfly.appmanager.ApplicationListener;
 import cn.featherfly.common.lang.ClassLoaderUtils;
+import cn.featherfly.common.lang.SystemPropertyUtils;
 
 /**
  * <p>
@@ -23,13 +24,17 @@ public class JavaApplicationTest {
 
     boolean running = true;
 
+    String filePath = "./bin/";
+
     @Test
     public void test() throws IOException, URISyntaxException {
         URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
         File file = new File(url.toURI());
-        JavaApplication app = new JavaApplication(file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
+        JavaApplication app = new JavaApplication(
+                file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
                 "abc", "ddd");
-        app.setRedirectOutput(new File(JavaApplication.class.getSimpleName() + ".out.txt"));
+        app.setRedirectOutput(new File(
+                filePath + JavaApplication.class.getSimpleName() + ".out.txt"));
         app.start(l -> {
             System.out.println(l.getApplication().getState());
         });
@@ -56,7 +61,131 @@ public class JavaApplicationTest {
                 // YUFEI_TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            System.out.println(running);
+            System.out.println("running " + running);
+        }
+    }
+
+    @Test
+    public void testStopOnShutdown() throws IOException, URISyntaxException {
+        URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
+        File file = new File(url.toURI());
+        JavaApplication app = new JavaApplication(
+                file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
+                "abc", "ddd");
+        app.setRedirectOutput(
+                new File(filePath + JavaApplication.class.getSimpleName()
+                        + ".stoponshutdown.out.txt"));
+        app.setStopOnShutdown(true);
+        app.start(l -> {
+            System.out.println(l.getApplication().getState());
+        });
+
+        app.addListener(new ApplicationListener<JavaApplication>() {
+
+            @Override
+            public void onStop(ApplicationEvent<JavaApplication> event) {
+                System.out.println("shutdown");
+                running = false;
+            }
+
+            @Override
+            public void onStart(ApplicationEvent<JavaApplication> event) {
+                // YUFEI_TODO Auto-generated method stub
+
+            }
+        });
+
+        while (running) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // YUFEI_TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("running " + running);
+            System.exit(1);
+        }
+    }
+
+    @Test
+    public void testStop() throws IOException, URISyntaxException {
+        URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
+        File file = new File(url.toURI());
+        JavaApplication app = new JavaApplication(
+                file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
+                "abc", "ddd");
+        app.setRedirectOutput(new File(filePath
+                + JavaApplication.class.getSimpleName() + ".stop.out.txt"));
+        app.start(l -> {
+            System.out.println(l.getApplication().getState());
+        });
+
+        app.addListener(new ApplicationListener<JavaApplication>() {
+
+            @Override
+            public void onStop(ApplicationEvent<JavaApplication> event) {
+                System.out.println("shutdown");
+                running = false;
+            }
+
+            @Override
+            public void onStart(ApplicationEvent<JavaApplication> event) {
+                // YUFEI_TODO Auto-generated method stub
+
+            }
+        });
+
+        while (running) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // YUFEI_TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            app.stop(l -> {
+                System.out.println("stoped");
+                System.out.println(l.getApplication().getState());
+            });
+            System.out.println("running " + running);
+        }
+    }
+
+    @Test
+    public void testJar() throws Exception {
+        JavaApplication app = new JavaApplication(
+                SystemPropertyUtils.getUserDir() + "/app",
+                "gradle-executed-jar-0.1.0.jar", "aaa", "bbb", "ccc", "ddd");
+        app.setRedirectOutput(new File(filePath
+                + JavaApplication.class.getSimpleName() + "2.out.txt"));
+        app.setRedirectError(new File(filePath
+                + JavaApplication.class.getSimpleName() + "2.err.txt"));
+        app.start(l -> {
+            System.out.println("app state = " + l.getApplication().getState());
+        });
+
+        app.addListener(new ApplicationListener<JavaApplication>() {
+
+            @Override
+            public void onStop(ApplicationEvent<JavaApplication> event) {
+                System.out.println("shutdown");
+                running = false;
+            }
+
+            @Override
+            public void onStart(ApplicationEvent<JavaApplication> event) {
+                // YUFEI_TODO Auto-generated method stub
+
+            }
+        });
+
+        while (running) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // YUFEI_TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("running " + running);
         }
     }
 }

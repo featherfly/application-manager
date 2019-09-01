@@ -1,6 +1,0 @@
-cn.featherfly.appmanager.supports.JavaMain main running  !! argu.length = 2
-cn.featherfly.appmanager.supports.JavaMain sleep 2000
-cn.featherfly.appmanager.supports.JavaMain sleep 2000
-cn.featherfly.appmanager.supports.JavaMain sleep 2000
-cn.featherfly.appmanager.supports.JavaMain sleep 2000
-cn.featherfly.appmanager.supports.JavaMain sleep 2000
