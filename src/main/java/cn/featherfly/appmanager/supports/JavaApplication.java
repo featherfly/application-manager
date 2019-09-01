@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import cn.featherfly.common.lang.CollectionUtils;
-import cn.featherfly.common.lang.StringUtils;
 
 /**
  * <p>
@@ -43,8 +42,10 @@ public class JavaApplication extends ProcessApplication<JavaApplication> {
      */
     public JavaApplication(String baseDir, String mainClass,
             Set<String> classpaths, String... argus) {
-        this(baseDir, mainClass, StringUtils.substringAfterLast(mainClass, ".")
-                .equalsIgnoreCase("jar"), classpaths, argus);
+        this(baseDir, mainClass,
+                org.apache.commons.lang3.StringUtils
+                        .substringAfterLast(mainClass, ".").equals("jar"),
+                classpaths, argus);
     }
 
     /**
