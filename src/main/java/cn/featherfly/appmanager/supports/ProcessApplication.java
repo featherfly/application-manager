@@ -19,8 +19,7 @@ import cn.featherfly.common.lang.LangUtils;
  *
  * @author zhongj
  */
-public abstract class ProcessApplication<A extends Application<A>>
-        extends AbstractApplication<A> {
+public abstract class ProcessApplication<A extends Application<A>> extends AbstractApplication<A> {
 
     private String baseDir;
 
@@ -36,7 +35,7 @@ public abstract class ProcessApplication<A extends Application<A>>
 
     /**
      * get stopOnShutdown
-     * 
+     *
      * @return stopOnShutdown
      */
     public boolean isStopOnShutdown() {
@@ -45,9 +44,8 @@ public abstract class ProcessApplication<A extends Application<A>>
 
     /**
      * set stopOnShutdown
-     * 
-     * @param stopOnShutdown
-     *            stopOnShutdown
+     *
+     * @param stopOnShutdown stopOnShutdown
      */
     public void setStopOnShutdown(boolean stopOnShutdown) {
         this.stopOnShutdown = stopOnShutdown;
@@ -73,8 +71,7 @@ public abstract class ProcessApplication<A extends Application<A>>
     /**
      * 设置baseDir
      *
-     * @param baseDir
-     *            baseDir
+     * @param baseDir baseDir
      */
     public void setBaseDir(String baseDir) {
         this.baseDir = baseDir;
@@ -92,8 +89,7 @@ public abstract class ProcessApplication<A extends Application<A>>
     /**
      * 设置redirectOutput
      *
-     * @param redirectOutput
-     *            redirectOutput
+     * @param redirectOutput redirectOutput
      */
     public void setRedirectOutput(File redirectOutput) {
         this.redirectOutput = redirectOutput;
@@ -111,8 +107,7 @@ public abstract class ProcessApplication<A extends Application<A>>
     /**
      * 设置redirectInput
      *
-     * @param redirectInput
-     *            redirectInput
+     * @param redirectInput redirectInput
      */
     public void setRedirectInput(File redirectInput) {
         this.redirectInput = redirectInput;
@@ -130,8 +125,7 @@ public abstract class ProcessApplication<A extends Application<A>>
     /**
      * 设置redirectError
      *
-     * @param redirectError
-     *            redirectError
+     * @param redirectError redirectError
      */
     public void setRedirectError(File redirectError) {
         this.redirectError = redirectError;
@@ -149,8 +143,7 @@ public abstract class ProcessApplication<A extends Application<A>>
     /**
      * 设置process
      *
-     * @param process
-     *            process
+     * @param process process
      */
     public void setProcess(Process process) {
         this.process = process;

@@ -24,17 +24,18 @@ public class JavaApplicationTest {
 
     boolean running = true;
 
-    String filePath = "./bin/";
+    URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
+
+    File file = new File(url.getPath());
+
+    String filePath = file.getPath() + "/../";
 
     @Test
     public void test() throws IOException, URISyntaxException {
-        URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
-        File file = new File(url.toURI());
-        JavaApplication app = new JavaApplication(
-                file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
-                "abc", "ddd");
-        app.setRedirectOutput(new File(
-                filePath + JavaApplication.class.getSimpleName() + ".out.txt"));
+        JavaApplication app = new JavaApplication(file.getPath() + "\\..\\test", JavaMain.class.getName(), "abc",
+                "ddd");
+        app.setRedirectOutput(new File(filePath + JavaApplication.class.getSimpleName() + ".out.txt"));
+        app.setRedirectError(new File(filePath + JavaApplication.class.getSimpleName() + ".err.txt"));
         app.start(l -> {
             System.out.println(l.getApplication().getState());
         });
@@ -69,12 +70,9 @@ public class JavaApplicationTest {
     public void testStopOnShutdown() throws IOException, URISyntaxException {
         URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
         File file = new File(url.toURI());
-        JavaApplication app = new JavaApplication(
-                file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
+        JavaApplication app = new JavaApplication(file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
                 "abc", "ddd");
-        app.setRedirectOutput(
-                new File(filePath + JavaApplication.class.getSimpleName()
-                        + ".stoponshutdown.out.txt"));
+        app.setRedirectOutput(new File(filePath + JavaApplication.class.getSimpleName() + ".stoponshutdown.out.txt"));
         app.setStopOnShutdown(true);
         app.start(l -> {
             System.out.println(l.getApplication().getState());
@@ -111,11 +109,9 @@ public class JavaApplicationTest {
     public void testStop() throws IOException, URISyntaxException {
         URL url = ClassLoaderUtils.getResource("", JavaApplicationTest.class);
         File file = new File(url.toURI());
-        JavaApplication app = new JavaApplication(
-                file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
+        JavaApplication app = new JavaApplication(file.getAbsolutePath() + "\\..\\test", JavaMain.class.getName(),
                 "abc", "ddd");
-        app.setRedirectOutput(new File(filePath
-                + JavaApplication.class.getSimpleName() + ".stop.out.txt"));
+        app.setRedirectOutput(new File(filePath + JavaApplication.class.getSimpleName() + ".stop.out.txt"));
         app.start(l -> {
             System.out.println(l.getApplication().getState());
         });
@@ -152,13 +148,10 @@ public class JavaApplicationTest {
 
     @Test
     public void testJar() throws Exception {
-        JavaApplication app = new JavaApplication(
-                SystemPropertyUtils.getUserDir() + "/app",
+        JavaApplication app = new JavaApplication(SystemPropertyUtils.getUserDir() + "/app",
                 "gradle-executed-jar-0.1.0.jar", "aaa", "bbb", "ccc", "ddd");
-        app.setRedirectOutput(new File(filePath
-                + JavaApplication.class.getSimpleName() + "2.out.txt"));
-        app.setRedirectError(new File(filePath
-                + JavaApplication.class.getSimpleName() + "2.err.txt"));
+        app.setRedirectOutput(new File(filePath + JavaApplication.class.getSimpleName() + ".jar.out.txt"));
+        app.setRedirectError(new File(filePath + JavaApplication.class.getSimpleName() + ".jar.err.txt"));
         app.start(l -> {
             System.out.println("app state = " + l.getApplication().getState());
         });
