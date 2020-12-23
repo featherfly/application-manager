@@ -3,7 +3,7 @@ apply from: './maven_push.gradle'
 
 
 dependencies {
-	compile group: 'cn.featherfly', name: 'featherfly-common', version: '1.7.8'
+	compile group: 'cn.featherfly.common', name: 'common-core', version: '1.8.21'
 	
 	compile group: 'org.apache.ant', name: 'ant', version: '1.10.6'
 	

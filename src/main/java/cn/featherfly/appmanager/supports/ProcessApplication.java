@@ -10,7 +10,7 @@ import java.util.List;
 import cn.featherfly.appmanager.AbstractApplication;
 import cn.featherfly.appmanager.Application;
 import cn.featherfly.appmanager.ApplicationException;
-import cn.featherfly.common.lang.LangUtils;
+import cn.featherfly.common.lang.Lang;
 
 /**
  * <p>
@@ -155,7 +155,7 @@ public abstract class ProcessApplication<A extends Application<A>> extends Abstr
     @Override
     protected void doStart() {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        if (LangUtils.isNotEmpty(baseDir)) {
+        if (Lang.isNotEmpty(baseDir)) {
             processBuilder.directory(new File(baseDir));
         }
         List<String> commands = getCommands();
